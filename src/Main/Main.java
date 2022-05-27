@@ -10,6 +10,7 @@ public class Main {
         cryptoMachine.start();
 
 
+//        Testing..
 //        ReadFile reader = new ReadFile();
 //
 //        String sample = reader.readFile("src/Main/test");
