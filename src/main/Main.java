@@ -1,14 +1,13 @@
-package Main;
+package main;
 
 import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         AmazingCryptoMachine cryptoMachine = new AmazingCryptoMachine();
 
         cryptoMachine.start();
-
 
 //        Testing..
 //        ReadFile reader = new ReadFile();
@@ -17,7 +16,7 @@ public class Main {
 //
 //        CaesarCypher caesar = new CaesarCypher();
 //
-//        System.out.println(caesar.cypher(sample, 3));
+//        System.out.println(caesar.encrpyt(sample, 3));
 
     }
 }

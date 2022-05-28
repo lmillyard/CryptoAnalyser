@@ -1,10 +1,11 @@
-package Main;
+package main.cypher;
 
 //assuming letters are lowercase and only spaces no special characters.
+//Modulo ensures any positive number can be used
 
 public class CaesarCypher {
 
-    String cypher(String message, int offSet) {
+    public String encrypt(String message, int offSet) {
 
         StringBuilder result = new StringBuilder();
 
@@ -19,5 +20,10 @@ public class CaesarCypher {
             }
         }
         return result.toString();
+    }
+
+    String decrypt(String message, int offset) {
+        return encrypt(message, 26 - (offset % 26));
+
     }
 }

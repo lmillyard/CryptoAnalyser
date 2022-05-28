@@ -1,11 +1,11 @@
-package Main;
+package main.fileOperations;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 public class WriteFile {
 
-    public void writeToFile(String fileName, String lines) throws IOException {
+    public void writeToFile(String fileName, String lines){
         File file = new File(fileName);
         String content = lines;
 
