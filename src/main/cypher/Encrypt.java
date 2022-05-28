@@ -1,5 +1,6 @@
 package main.cypher;
 
+import main.AmazingCryptoMachine;
 import main.fileOperations.ReadFile;
 import main.fileOperations.WriteFile;
 
@@ -16,6 +17,8 @@ public class Encrypt {
     static int offset = 0;
 
     public void start() {
+
+//Makes sure file exists else loops back to picking a file.
 
         while (true) {
             System.out.println("Pick a file to encrypt");
@@ -53,9 +56,10 @@ public class Encrypt {
         System.out.println(encodedMessage);
 
         System.out.println("Shall we save your results, yes or no?");
-
+// checks for valid input and saves a text file.
         while(true) {
-            if(scanner.nextLine().equalsIgnoreCase("yes")){
+            String choice = scanner.nextLine();
+            if(choice.equalsIgnoreCase("yes")){
 
                 System.out.println("Great what shall we name our file?");
 
@@ -67,7 +71,7 @@ public class Encrypt {
                 System.out.println("File: \"" + newFile + "\" saved!");
                 break;
 
-            } else if (scanner.nextLine().equalsIgnoreCase("no")) {
+            } else if (choice.equalsIgnoreCase("no")) {
                 System.out.println("Excellent, moving on!");
                 break;
             } else {

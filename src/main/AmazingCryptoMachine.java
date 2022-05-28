@@ -1,6 +1,7 @@
 package main;
 
 import main.cypher.CaesarCypher;
+import main.cypher.Decrypt;
 import main.cypher.Encrypt;
 import main.cypher.Menu;
 import main.fileOperations.ReadFile;
@@ -17,16 +18,23 @@ public class AmazingCryptoMachine {
 
 
     public void start() {
-        System.out.println("Welcome to the amazing Cryptography Machine");
+        System.out.println("Welcome to the amazing cryptography machine");
         main.cypher.Menu menu = new Menu();
         int option = menu.pickAnOption();
         // Option 1 = encrypt, Option 2 = decrypt
-
-        if(option == 1){
-            Encrypt encrypt = new Encrypt();
-            encrypt.start();
+        while(true) {
+            if(option == 0) {
+                break;
+            }
+            if(option == 1) {
+                Encrypt encrypt = new Encrypt();
+                encrypt.start();
+            } else if (option == 2) {
+                Decrypt decrypt = new Decrypt();
+                decrypt.start();
+            }
         }
-//Makes sure file exists else loops back to picking a file.
+
 
 }
 }
