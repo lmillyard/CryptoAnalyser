@@ -1,16 +1,17 @@
 package main.cypher;
 
-//assuming letters are lowercase and only spaces no special characters.
-//Modulo ensures any positive number can be used
+//Skips all special characters and capitals.
+//Modulo ensures any number can be used
 
 public class CaesarCypher {
+
 
     public String encrypt(String message, int offSet) {
 
         StringBuilder result = new StringBuilder();
 
         for (char character : message.toCharArray()) {
-            if (character != ' ') {
+            if (character > 96 && character < 123) {
                 int originalAlphabetPosition = character - 'a';
                 int newAlphabetPosition = (originalAlphabetPosition + offSet) % 26;
                 char newCharacter = (char) ('a' + newAlphabetPosition);
@@ -26,4 +27,5 @@ public class CaesarCypher {
         return encrypt(message, 26 - (offset % 26));
 
     }
+
 }

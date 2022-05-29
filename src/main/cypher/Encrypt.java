@@ -1,6 +1,5 @@
 package main.cypher;
 
-import main.AmazingCryptoMachine;
 import main.fileOperations.ReadFile;
 import main.fileOperations.WriteFile;
 
@@ -42,7 +41,7 @@ public class Encrypt {
             if(! scanner.hasNextInt()){
                 scanner.next();
                 System.out.println("Please pick an integer.");
-
+//TODO MAKE SURE ONLY POSITIVE NUMBERS CAN BE ENTERED
             } else {
                 offset = scanner.nextInt();
                 break;

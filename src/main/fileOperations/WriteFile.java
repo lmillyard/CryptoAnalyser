@@ -2,7 +2,7 @@ package main.fileOperations;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-
+//writes and saves a file.
 public class WriteFile {
 
     public void writeToFile(String fileName, String lines){

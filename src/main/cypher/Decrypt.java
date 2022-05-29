@@ -1,6 +1,6 @@
 package main.cypher;
-
-import main.AmazingCryptoMachine;
+//Output to console: uses the CaesarCypher/Break class to decrypt a given file and outputs options to the user asking whether they
+//know the offset key or need to crack it - returns the cracked code.
 import main.fileOperations.ReadFile;
 
 import java.io.File;
@@ -57,14 +57,44 @@ public class Decrypt {
                 break;
 
             } else if (choice.equalsIgnoreCase("no")) {
-                System.out.println("Hmmm, Okay lets try cracking it then!");
+                System.out.println("Hmmm, Okay lets try cracking it then!\n");
+
+                try {
+                    for (int i = 0; i < 4; i++) {
+                        Thread.sleep(500);
+                        System.out.print("**Thinking**");
+                    }
+                    Thread.sleep(500);
+                    System.out.println("\n");
+
+                } catch (InterruptedException e){
+                    System.out.println(e.getMessage());
+                }
+//                try {
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException e){
+//                    System.out.println(e.getMessage());
+//                }
+//                System.out.println("\n************ Thinking *************\n");
+//                try {
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException e){
+//                    System.out.println(e.getMessage());
+//                }
+                BruteForce breaker = new BruteForce();
+                int probableKey = breaker.breakCipher(contents);
+                System.out.println("My best guess is that " + probableKey + " is the key.");
+                System.out.println("lets test it out!\n");
+                CaesarCypher cypher = new CaesarCypher();
+                String decryptedMessage = cypher.decrypt(contents, probableKey);
+
+                System.out.println("Here is the decrypted message!\n\n" + decryptedMessage + "\n");
                 break;
             } else {
                 System.out.println("please enter yes or no!");
             }
+
         }
-        scanner.close();
-        System.out.println();
     }
 
 }

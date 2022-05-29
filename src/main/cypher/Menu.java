@@ -1,5 +1,5 @@
 package main.cypher;
-
+//Initial Menu options to find out what the user wants to do: encrypt/decrypt/exit
 import java.io.InputStreamReader;
 import java.util.Scanner;
 

@@ -1,7 +1,7 @@
 package main.fileOperations;
 
 import java.io.*;
-
+//Reads a given file.
 public class ReadFile {
 
 

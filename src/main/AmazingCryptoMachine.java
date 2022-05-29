@@ -1,19 +1,12 @@
 package main;
 
-import main.cypher.CaesarCypher;
 import main.cypher.Decrypt;
 import main.cypher.Encrypt;
 import main.cypher.Menu;
-import main.fileOperations.ReadFile;
-import main.fileOperations.WriteFile;
+// Implements the Menu class and funnels through to correct option - encrypt/decrypt.
 
-import java.io.File;
-import java.io.InputStreamReader;
-import java.util.Scanner;
-
-//TODO  Implemnent pickable options - like 1)encrypt, 2)decrypt 3)write to file
-// DO you know the offset? if no - options - brute force/ statistics
-// Interactive menu for encoding a given file (from console) then encoding using a specified offset
+//TODO  Maybe give the option of encrypting a sentence from console as well as a file?
+//TODO Make an option to loop back around once finished.
 public class AmazingCryptoMachine {
 
 
@@ -29,9 +22,11 @@ public class AmazingCryptoMachine {
             if(option == 1) {
                 Encrypt encrypt = new Encrypt();
                 encrypt.start();
+                break;
             } else if (option == 2) {
                 Decrypt decrypt = new Decrypt();
                 decrypt.start();
+                break;
             }
         }
 
