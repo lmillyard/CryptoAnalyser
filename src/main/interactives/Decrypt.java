@@ -78,6 +78,7 @@ public class Decrypt {
                         //run brute force
                         RunBruteCrack runBruteCrack = new RunBruteCrack(contents);
                         runBruteCrack.run();
+                        break;
                     } else if (pickChoice == 2) {
                         System.out.println("Statistically! Fantastic idea!\n");
                         RunStatisticalDecrypt runStatisticalDecrypt = new RunStatisticalDecrypt(contents);
