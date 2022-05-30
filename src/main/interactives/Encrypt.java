@@ -1,5 +1,6 @@
-package main.cypher;
+package main.interactives;
 
+import main.cypher.CaesarCypher;
 import main.fileOperations.ReadFile;
 import main.fileOperations.WriteFile;
 
@@ -26,8 +27,8 @@ public class Encrypt {
             File file = new File(fileName);
 
             if (file.exists()) {
-                ReadFile reader = new ReadFile();
-                contents = reader.readFile(fileName);
+                ReadFile reader = new ReadFile(fileName);
+                contents = reader.readFile();
                 break;
             } else {
                 System.out.println("That file does not exist.");

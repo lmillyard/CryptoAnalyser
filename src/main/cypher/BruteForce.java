@@ -1,67 +1,46 @@
 package main.cypher;
-//Cracking a Caesar cipher, by using ChiSquares and the probability statistics of each occurrence of a letter.
-//code loops through each offset 0-25 and each letter gets an error score - the lowest one corresponds with the
-//most likely offset - this number is returned
-import org.apache.commons.math3.stat.inference.ChiSquareTest;
 
-import java.util.Arrays;
-import java.util.stream.IntStream;
-
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class BruteForce {
 
-    CaesarCypher cypher = new CaesarCypher();
+    String contents;
 
-    private static final double[] englishLettersProbabilities = {0.073, 0.009, 0.030, 0.044, 0.130, 0.028, 0.016, 0.035, 0.074,
-            0.002, 0.003, 0.035, 0.025, 0.078, 0.074, 0.027, 0.003,
-            0.077, 0.063, 0.093, 0.027, 0.013, 0.016, 0.005, 0.019, 0.001};
+    Map<Integer, Integer> scoreMap = new LinkedHashMap<>();
+    Integer highestScore;
+    int winningOffset;
 
-    public int breakCipher(String message) {
-        return probableOffset(chiSquares(message));
+    public BruteForce(String contents){
+        this.contents = contents;
+
     }
 
-    private double[] chiSquares(String message) {
-        double[] expectedLettersFrequencies = expectedLettersFrequencies(message.length());
+    public int bruteCrack() {
 
-        double[] chiSquares = new double[26];
+        CaesarCypher cypher = new CaesarCypher();
+        LanguageRules languageRules = new LanguageRules();
 
-        for (int offset = 0; offset < chiSquares.length; offset++) {
-            String decipheredMessage = cypher.decrypt(message, offset);
-            long[] lettersFrequencies = observedLettersFrequencies(decipheredMessage);
-            double chiSquare = new ChiSquareTest().chiSquare(expectedLettersFrequencies, lettersFrequencies);
-            chiSquares[offset] = chiSquare;
-        }
+        for (int offset = 0; offset < 26; offset++) {
+            int score = 0;
+            String decipheredMessage = cypher.decrypt(contents, offset);
+            String messageArray [] = decipheredMessage.split(" ");
 
-        return chiSquares;
-    }
-
-    private long[] observedLettersFrequencies(String message) {
-        return IntStream.rangeClosed('a', 'z')
-                .mapToLong(letter -> countLetter((char) letter, message))
-                .toArray();
-    }
-
-    private long countLetter(char letter, String message) {
-        return message.chars()
-                .filter(character -> character == letter)
-                .count();
-    }
-
-    private double[] expectedLettersFrequencies(int messageLength) {
-        return Arrays.stream(englishLettersProbabilities)
-                .map(probability -> probability * messageLength)
-                .toArray();
-    }
-
-    private int probableOffset(double[] chiSquares) {
-        int probableOffset = 0;
-        for (int offset = 0; offset < chiSquares.length; offset++) {
-            //System.out.println(String.format("Chi-Square for offset %d: %.2f", offset, chiSquares[offset]));
-            if (chiSquares[offset] < chiSquares[probableOffset]) {
-                probableOffset = offset;
+            for (String word: messageArray) {
+                score += languageRules.englishLangCipherScore(word);
             }
+            scoreMap.put(offset,score);
         }
 
-        return probableOffset;
+        highestScore = (Integer) scoreMap.values().toArray()[0];
+
+        for (Map.Entry<Integer, Integer> entry: scoreMap.entrySet()) {
+            if(entry.getValue() > highestScore) {
+                highestScore = entry.getValue();
+                winningOffset = entry.getKey();
+            }
+        } return winningOffset;
     }
+
+
 }

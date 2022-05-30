@@ -23,7 +23,7 @@ public class CaesarCypher {
         return result.toString();
     }
 
-    String decrypt(String message, int offset) {
+    public String decrypt(String message, int offset) {
         return encrypt(message, 26 - (offset % 26));
 
     }

@@ -4,8 +4,13 @@ import java.io.*;
 //Reads a given file.
 public class ReadFile {
 
+    String fileName;
 
-    public String readFile(String fileName) {
+    public ReadFile(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String readFile() {
         String result = null;
 
         try(BufferedReader br = new BufferedReader(new FileReader(fileName))) {
