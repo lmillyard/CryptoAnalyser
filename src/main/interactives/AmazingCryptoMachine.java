@@ -5,7 +5,7 @@ package main.interactives;
 //TODO  Maybe give the option of encrypting a sentence from console as well as a file?
 //TODO Make an option to loop back around once finished.
 //TODO - could give the options of doing multiple files at once?
-public class AmazingCryptoMachine {
+public class AmazingCryptoMachine extends Menu{
 
     private static int timesRoundCounter = 0;
 
@@ -29,8 +29,8 @@ public class AmazingCryptoMachine {
         }else {
             welcomeBackMessage();
         }
-        Menu menu = new Menu();
-        int option = menu.pickAnOption();
+
+        int option = pickAnOption();
         // Option 1 = encrypt, Option 2 = decrypt, Option 0 = exit.
         while (true) {
             if (option == 0) {
@@ -38,14 +38,14 @@ public class AmazingCryptoMachine {
                 break;
             }
             if (option == 1) {
-                String contents = menu.pickAFile();
-                int offset = menu.pickAnOffset();
-                menu.encrypt(contents, offset);
+                String contents = pickAFile();
+                int offset = pickAnOffset();
+                encrypt(contents, offset);
                 timesRoundCounter++;
                 start();
             } else if (option == 2) {
-                String contents = menu.pickAFile();
-                menu.decrypt(contents);
+                String contents = pickAFile();
+                decrypt(contents);
                 timesRoundCounter++;
                 start();
             }
