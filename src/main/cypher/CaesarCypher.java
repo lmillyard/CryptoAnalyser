@@ -1,6 +1,6 @@
 package main.cypher;
 
-//Skips all special characters and capitals.
+//Algorithm for the Caesar cipher - Skips all special characters and capitals.
 //Modulo ensures any number can be used
 
 public class CaesarCypher {

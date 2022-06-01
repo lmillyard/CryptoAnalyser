@@ -7,27 +7,48 @@ package main.interactives;
 //TODO - could give the options of doing multiple files at once?
 public class AmazingCryptoMachine {
 
+    private static int timesRoundCounter = 0;
 
+    private void welcomeMessage() {
+        System.out.println("""
+                \t~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                Welcome to the amazing crypto machine!
+                \t~~~~~~~~~~~~~~~~~~~~~~~~~~~~""");
+    }
+    private void welcomeBackMessage(){
+        System.out.println("\t\tWelcome back!");
+    }
+    private void goodbyeMessage() {
+        System.out.println("\tThank you and goodbye!");
+    }
     public void start() {
-        System.out.println("Welcome to the amazing cryptography machine");
+        
+        if (timesRoundCounter == 0) {
+            welcomeMessage();
+            timesRoundCounter++;
+        }else {
+            welcomeBackMessage();
+        }
         Menu menu = new Menu();
         int option = menu.pickAnOption();
         // Option 1 = encrypt, Option 2 = decrypt, Option 0 = exit.
-        while(true) {
-            if(option == 0) {
+        while (true) {
+            if (option == 0) {
+                goodbyeMessage();
                 break;
             }
-            if(option == 1) {
-                Encrypt encrypt = new Encrypt();
-                encrypt.start();
-                break;
+            if (option == 1) {
+                String contents = menu.pickAFile();
+                int offset = menu.pickAnOffset();
+                menu.encrypt(contents, offset);
+                timesRoundCounter++;
+                start();
             } else if (option == 2) {
-                Decrypt decrypt = new Decrypt();
-                decrypt.start();
-                break;
+                String contents = menu.pickAFile();
+                menu.decrypt(contents);
+                timesRoundCounter++;
+                start();
             }
         }
-
-
-}
+    }
 }

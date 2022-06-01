@@ -2,16 +2,17 @@ package main.interactives;
 
 import main.cypher.CaesarCypher;
 import main.cypher.StatisticalCrack;
-import main.fileOperations.WriteFile;
 
 import java.io.InputStreamReader;
 import java.util.Scanner;
 
-public class RunStatisticalDecrypt {
-    String contents;
-    private static Scanner scanner = new Scanner(new InputStreamReader(System.in));
+//Runs the statistical crack code - outputs the decrypted code and ask user if they want to save end file
 
-    public RunStatisticalDecrypt(String fileContents){
+public class RunStatisticalCrack {
+    String contents;
+    private static final Scanner scanner = new Scanner(new InputStreamReader(System.in));
+
+    public RunStatisticalCrack(String fileContents){
         this.contents = fileContents;
     }
     public void run () {
@@ -38,28 +39,7 @@ public class RunStatisticalDecrypt {
         String decryptedMessage = cypher.decrypt(contents, probableKey);
 
         System.out.println("Here is the decrypted message!\n------------------------------\n" + decryptedMessage + "\n");
-        System.out.println("Shall we save your results, yes or no?");
-// checks for valid input and saves a text file.
-        while(true) {
-            String saveChoice = scanner.nextLine();
-            if(saveChoice.equalsIgnoreCase("yes")){
-
-                System.out.println("Great what shall we name our file?");
-
-                String newFile = scanner.nextLine();
-                WriteFile writer = new WriteFile();
-
-                writer.writeToFile(newFile, decryptedMessage);
-
-                System.out.println("File: \"" + newFile + "\" saved!");
-                break;
-
-            } else if (saveChoice.equalsIgnoreCase("no")) {
-                System.out.println("Excellent, moving on!");
-                break;
-            } else {
-                System.out.println("please enter yes or no!");
-            }
-        }
+        Menu menu = new Menu();
+        menu.saveFile(decryptedMessage);
     }
 }

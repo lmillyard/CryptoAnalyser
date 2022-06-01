@@ -3,6 +3,8 @@ package main.cypher;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+//Class that call in LanguageRules and loops through them to create a score based on most probable offset
+//The Highest score wins. Returns the most likely Offset based on this score.
 public class BruteForce {
 
     String contents;

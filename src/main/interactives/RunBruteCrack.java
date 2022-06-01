@@ -2,10 +2,11 @@ package main.interactives;
 
 import main.cypher.BruteForce;
 import main.cypher.CaesarCypher;
-import main.fileOperations.WriteFile;
 
 import java.io.InputStreamReader;
 import java.util.Scanner;
+
+//Runs the Brute Crack code and outputs an interactive menu to the user asking if they want to save the decrypted message
 
 public class RunBruteCrack {
     String contents;
@@ -17,7 +18,6 @@ public class RunBruteCrack {
 
 
     public void run() {
-
 
         try {
             for (int i = 0; i < 4; i++) {
@@ -41,28 +41,7 @@ public class RunBruteCrack {
         String decryptedMessage = cypher.decrypt(contents, probableKey);
 
         System.out.println("Here is the decrypted message!\n------------------------------\n" + decryptedMessage + "\n");
-        System.out.println("Shall we save your results, yes or no?");
-// checks for valid input and saves a text file.
-        while(true) {
-            String saveChoice = scanner.nextLine();
-            if(saveChoice.equalsIgnoreCase("yes")){
-
-                System.out.println("Great what shall we name our file?");
-
-                String newFile = scanner.nextLine();
-                WriteFile writer = new WriteFile();
-
-                writer.writeToFile(newFile, decryptedMessage);
-
-                System.out.println("File: \"" + newFile + "\" saved!");
-                break;
-
-            } else if (saveChoice.equalsIgnoreCase("no")) {
-                System.out.println("Excellent, moving on!");
-                break;
-            } else {
-                System.out.println("please enter yes or no!");
-            }
-        }
+        Menu menu = new Menu();
+        menu.saveFile(decryptedMessage);
     }
 }
