@@ -9,23 +9,25 @@ import main.interactives.Menu;
 
 public class LanguageRules extends Menu {
 
-    private final String language;
+    private String language;
     private int score;
-    private final boolean isUsingDefaultRules;
+    private boolean isUsingDefaultRules;
+    private String uploadedContents;
 
-
-
-    public LanguageRules(String language, boolean defaultRules){
+    public LanguageRules(String language, boolean defaultRules, String uploadedContents){
         this.language = language;
         this.isUsingDefaultRules = defaultRules;
+        this.uploadedContents = uploadedContents;
     }
+
 
     public int getScore(String wordToCheck) {
         score = 0;
         if (language.equalsIgnoreCase("english") && isUsingDefaultRules) {
             score = englishLangDefaultScore(wordToCheck);
+        } else {
+            score = useOwnFileScore(wordToCheck, uploadedContents);
         }
-
         return score;
     }
 
@@ -36,9 +38,25 @@ public class LanguageRules extends Menu {
         return contents.split(",");
 
     }
+
+    private String[] splitContentsBySpaces(String contents) {
+        return contents.split(" ");
+    }
+
+    private int useOwnFileScore(String wordToCheck, String uploadContents) {
+        String[] splitUpload = splitContentsBySpaces(uploadContents);
+
+        for(String word : splitUpload) {
+            if (wordToCheck.equalsIgnoreCase(word)) {
+                score += 50;
+            }
+        }
+        return score;
+    }
+
     private int englishLangDefaultScore(String wordToCheck) {
-        String[] cannotExist = splitCSV("englishLangIllegalCombos");
-        String[] mustExist = splitCSV("englishLangMostCommon");
+        String[] cannotExist = splitCSV("src/main/files/englishLangIllegalCombos");
+        String[] mustExist = splitCSV("src/main/files/englishLangMostCommon");
 
         for (String combo : cannotExist) {
             if (wordToCheck.contains(combo)) {

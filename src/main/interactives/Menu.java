@@ -86,8 +86,7 @@ public class Menu {
 
         System.out.println("Please pick which language your file is written in.");
         System.out.println("1. English.");
-        System.out.println("2. Serbian.");
-        System.out.println("3. Other.");
+        System.out.println("2. Other.");
 
         while (true) {
             try {
@@ -98,10 +97,6 @@ public class Menu {
                         return "English";
                     }
                     case "2" -> {
-                        System.out.println("Serbian, велики.\n");
-                        return "Serbian";
-                    }
-                    case "3" -> {
                         System.out.println("Other, alright.");
                         return "Other";
                     }
@@ -117,8 +112,8 @@ public class Menu {
 
         if (language.equalsIgnoreCase("english")) {
             System.out.println("Please pick an option");
-            System.out.println("1. To use default rules.");
-            System.out.println("2. to use a sample from the same author.");
+            System.out.println("1. Use default rules.");
+            System.out.println("2. Use a sample from the same author.");
 
             while (true) {
                 try {
@@ -140,7 +135,7 @@ public class Menu {
                 }
             }
         } else {
-            System.out.println("Please upload an un-coded text file from the same author for us to study.");
+            System.out.println("Please upload an un-coded text file, preferably from the same author for us to study.");
             return false;
         }
     }
@@ -185,7 +180,7 @@ public class Menu {
         saveFile(encodedMessage);
     }
 
-    protected void decrypt(String contents) {
+    protected void decrypt(String contents, String language) {
 
         while(true) {
             try {
@@ -202,31 +197,40 @@ public class Menu {
                         saveFile(decryptedMessage);
                     }
                     case "NO" -> {
-                        System.out.println("\nHmmm, Okay lets try cracking it then!");
-                        System.out.println("Please pick how you would like to decrypt your file.");
-                        System.out.println("1. Brute Force.");
-                        System.out.println("2. Statistically");
+                        if(language.equalsIgnoreCase("english")) {
+                            System.out.println("\nHmmm, Okay lets try cracking it then!");
+                            System.out.println("Please pick how you would like to decrypt your file.");
+                            System.out.println("1. Brute Force.");
+                            System.out.println("2. Statistically");
 
-                        while(true) {
-                            String option = reader.readLine();
-                            switch (option) {
-                                case "1" -> {
-                                    System.out.println("Brute force! Excellent choice.\n");
-                                    RunBruteCrack runBruteCrack = new RunBruteCrack(contents);
-                                    runBruteCrack.run();
-                                }
-                                case "2" -> {
-                                    System.out.println("Statistically! Fantastic idea!\n");
-                                    RunStatisticalCrack runStatisticalCrack = new RunStatisticalCrack(contents);
-                                    runStatisticalCrack.run();
-                                }
-                                default -> {
-                                    System.out.println("\t\tplease pick a valid option!\n (1 for brute force or 2 for statistical crack.)\n");
-                                    continue;
-                                }
+                            while(true) {
+                                String option = reader.readLine();
+                                switch (option) {
+                                    case "1" -> {
+                                        System.out.println("Brute force! Excellent choice.\n");
+                                        boolean defaultRules = pickDefaultRules(language);
+                                        RunBruteCrack runBruteCrack = new RunBruteCrack(contents, defaultRules);
+                                        runBruteCrack.run(language);
+                                    }
+                                    case "2" -> {
+                                        System.out.println("Statistically! Fantastic idea!\n");
+                                        RunStatisticalCrack runStatisticalCrack = new RunStatisticalCrack(contents);
+                                        runStatisticalCrack.run();
+                                    }
+                                    default -> {
+                                        System.out.println("\t\tplease pick a valid option!\n (1 for brute force or 2 for statistical crack.)\n");
+                                        continue;
+                                    }
 
-                            }break;
+                                }break;
+                            }
+                        } else {
+                            System.out.println("Okay, lets try using brute force to crack this!");
+                            System.out.println("Please upload an un-coded text file, preferably from the same author for us to study.");
+                            RunBruteCrack runBruteCrack = new RunBruteCrack(contents, false);
+                            runBruteCrack.run(language);
                         }
+
                     }
                     default -> System.out.println("please pick a valid option!\n");
 
@@ -236,4 +240,8 @@ public class Menu {
             }break;
         }
     }
+
+//    protected void myBestGuess(){
+//
+//    }
 }

@@ -7,18 +7,26 @@ import main.cypher.CaesarCypher;
 
 public class RunBruteCrack extends Menu {
     private final String contents;
+    private String uploadedFileContents;
+    private boolean usingDefaultRules;
+    private int probableKey;
 
-    public RunBruteCrack(String fileContents){
+    public RunBruteCrack(String fileContents, boolean defaultRules){
         this.contents = fileContents;
+        this.usingDefaultRules = defaultRules;
     }
 
-    public void run() {
-        String language = pickALanguage();
-        boolean defaultRules = pickDefaultRules(language);
 
-        BruteForce brute = new BruteForce(contents);
-        int probableKey = brute.bruteCrack(language, defaultRules);
+    public void run(String language) {
 
+        if (usingDefaultRules) {
+            BruteForce brute = new BruteForce(contents);
+            probableKey = brute.bruteCrack(language, usingDefaultRules);
+        } else {
+            uploadedFileContents = pickAFile();
+            BruteForce brute = new BruteForce(contents, uploadedFileContents);
+            probableKey = brute.bruteCrack(language, usingDefaultRules);
+        }
         try {
             for (int i = 0; i < 4; i++) {
                 Thread.sleep(500);

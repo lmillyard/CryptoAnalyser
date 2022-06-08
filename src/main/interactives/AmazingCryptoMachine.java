@@ -7,6 +7,7 @@ package main.interactives;
 public class AmazingCryptoMachine extends Menu{
     private int timesRoundCounter = 0;
     private String contents;
+    private String language;
 
 
     private void welcomeMessage() {
@@ -44,7 +45,8 @@ public class AmazingCryptoMachine extends Menu{
                     start();
                 case 2:
                     contents = pickAFile();
-                    decrypt(contents);
+                    language = pickALanguage();
+                    decrypt(contents, language);
                     start();
             }
     }

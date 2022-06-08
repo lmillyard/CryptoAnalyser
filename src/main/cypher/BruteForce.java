@@ -8,6 +8,7 @@ import java.util.Map;
 public class BruteForce {
 
     private String contents;
+    private String uploadedContents;
 
     Map<Integer, Integer> scoreMap = new LinkedHashMap<>();
     Integer highestScore;
@@ -15,13 +16,16 @@ public class BruteForce {
 
     public BruteForce(String contents){
         this.contents = contents;
-
+    }
+    public BruteForce(String contents, String userUploadedContents){
+        this.contents = contents;
+        this.uploadedContents = userUploadedContents;
     }
 
     public int bruteCrack(String language, boolean defaultRule) {
 
         CaesarCypher cypher = new CaesarCypher();
-        LanguageRules languageRules = new LanguageRules(language, defaultRule);
+        LanguageRules languageRules = new LanguageRules(language, defaultRule, uploadedContents);
 
         for (int offset = 0; offset < 26; offset++) {
             int score = 0;
