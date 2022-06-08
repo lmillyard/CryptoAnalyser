@@ -5,16 +5,17 @@ import main.cypher.CaesarCypher;
 import main.fileOperations.ReadFile;
 import main.fileOperations.WriteFile;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class Menu {
-
-
+    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    Scanner scanner = new Scanner(new InputStreamReader(System.in));
 
     public int pickAnOption() {
-        Scanner scanner = new Scanner(new InputStreamReader(System.in));
 
         System.out.println("What would you like to do today?");
         System.out.println("1. Encrypt.");
@@ -22,184 +23,217 @@ public class Menu {
         System.out.println("0. To Exit");
 
         while (true) {
-            if (! scanner.hasNextInt()) {
-                scanner.next();
-                System.out.println("Please pick an integer.");
-                continue;
-            }
-            int choice = scanner.nextInt();
-            if (choice == 0) {
-                return 0;
-            }
-            if (choice == 1) {
-                System.out.println("Excellent choice.");
-                return 1;
-            } else if (choice == 2) {
-                System.out.println("Fantastic idea!");
-                return 2;
-            } else {
-                System.out.println("Please pick a valid option!");
+            try {
+                String choice = reader.readLine();
+
+                switch (choice) {
+                    case "1":
+                        System.out.println("Excellent choice.");
+                        return 1;
+                    case "2":
+                        System.out.println("Fantastic idea!");
+                        return 2;
+                    case "0":
+                        return 0;
+                    default:
+                        System.out.println("Please pick a valid number.");
+
+                }
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
             }
         }
-
     }
 
-    public String pickAFile(){
-        Scanner scanner = new Scanner(new InputStreamReader(System.in));
+    protected String pickAFile() {
         String fileName;
-
-
         while (true) {
-            System.out.println("Pick a file.");
-            fileName = scanner.nextLine();
-            File file = new File(fileName);
+            try {
+                System.out.println("Pick a file.");
+                fileName = reader.readLine();
+                File file = new File(fileName);
 
-            if (! file.exists()) {
-                System.out.println("That file does not exist.");
-                continue;
-            } ReadFile reader = new ReadFile(fileName);
+                if (!file.exists()) {
+                    System.out.println("That file does not exist.");
+                    continue;
+                }
+                ReadFile reader = new ReadFile(fileName);
+                return reader.readFile();
 
-            return reader.readFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
-
-    public int pickAnOffset() {
-        Scanner scanner = new Scanner(new InputStreamReader(System.in));
-              System.out.println("Pick a shift number.");
+    //TODO MAKE SURE ONLY POSITIVE NUMBERS CAN BE ENTERED
+    protected int pickAnOffset() {
+        int offset;
+        System.out.println("Pick a shift number.");
 
         while (true) {
 
             if (!scanner.hasNextInt()) {
                 scanner.next();
                 System.out.println("Please pick an integer.");
-                continue;
-//TODO MAKE SURE ONLY POSITIVE NUMBERS CAN BE ENTERED
-            }
-
-            return scanner.nextInt();
-
-        }
-
-    }
-
-    public void saveFile(String message) {
-        System.out.println("Shall we save your results, yes or no?");
-        Scanner scanner = new Scanner(new InputStreamReader(System.in));
-
-// checks for valid input and saves a text file.
-        while(true) {
-            String saveChoice = scanner.nextLine();
-            if(saveChoice.equalsIgnoreCase("yes")){
-
-                System.out.println("Great what shall we name our file?");
-
-                String newFile = scanner.nextLine();
-                WriteFile writer = new WriteFile();
-
-                writer.writeToFile(newFile, message);
-
-                System.out.println("File: \"" + newFile + "\" saved!");
-                break;
-
-            } else if (saveChoice.equalsIgnoreCase("no")) {
-                System.out.println("Excellent, moving on!\n");
-                break;
             } else {
-                System.out.println("please enter yes or no!");
+                offset = scanner.nextInt();
+                return offset;
             }
         }
     }
 
+    protected String pickALanguage() {
 
-    public void encrypt(String contents, int offset){
+        System.out.println("Please pick which language your file is written in.");
+        System.out.println("1. English.");
+        System.out.println("2. Serbian.");
+        System.out.println("3. Other.");
 
-        Scanner scanner = new Scanner(new InputStreamReader(System.in));
+        while (true) {
+            try {
+                String choice = reader.readLine();
+                switch (choice) {
+                    case "1" -> {
+                        System.out.println("English, Great!\n");
+                        return "English";
+                    }
+                    case "2" -> {
+                        System.out.println("Serbian, велики.\n");
+                        return "Serbian";
+                    }
+                    case "3" -> {
+                        System.out.println("Other, alright.");
+                        return "Other";
+                    }
+                    default -> System.out.println("Please pick an integer.");
+                }
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
 
+    protected boolean pickDefaultRules(String language) {
 
-            CaesarCypher cypher = new CaesarCypher();
-            String encodedMessage = cypher.encrypt(contents, offset);
+        if (language.equalsIgnoreCase("english")) {
+            System.out.println("Please pick an option");
+            System.out.println("1. To use default rules.");
+            System.out.println("2. to use a sample from the same author.");
 
-            System.out.println("You're enigmatic results are.. Dun dun duuunnn... \n");
-            System.out.println(encodedMessage);
-
-            System.out.println("Shall we save your results, yes or no?");
-// checks for valid input and saves a text file.
             while (true) {
-                String choice = scanner.nextLine();
-                if (choice.equalsIgnoreCase("yes")) {
+                try {
+                    String choice = reader.readLine();
 
-                    System.out.println("Great what shall we name our file?");
-
-                    String newFile = scanner.nextLine();
-                    WriteFile writer = new WriteFile();
-
-                    writer.writeToFile(newFile, encodedMessage);
-
-                    System.out.println("File: \"" + newFile + "\" saved!\n");
-                    break;
-
-                } else if (choice.equalsIgnoreCase("no")) {
-                    System.out.println("Excellent, moving on!\n");
-                    break;
-                } else {
-                    System.out.println("please enter yes or no!");
+                    switch (choice) {
+                        case "1" -> {
+                            System.out.println("Default, Excellent!");
+                            return true;
+                        }
+                        case "2" -> {
+                            System.out.println("Use your own, smashing.");
+                            return false;
+                        }
+                        default -> System.out.println("Please pick option 1 or 2!");
+                    }
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
                 }
             }
-
+        } else {
+            System.out.println("Please upload an un-coded text file from the same author for us to study.");
+            return false;
         }
+    }
 
-        public void decrypt(String contents) {
-            Scanner scanner = new Scanner(new InputStreamReader(System.in));
 
-            System.out.println("Do you know the key, yes/no?");
-            while (true) {
-                String choice = scanner.nextLine();
+    protected void saveFile(String message) {
 
-                if (choice.equalsIgnoreCase("yes")) {
-                    System.out.println("Great, enter it now!");
-                    int offset = pickAnOffset();
+        System.out.println("Shall we save your results, yes or no?");
 
-                    CaesarCypher cypher = new CaesarCypher();
-                    String decryptedMessage = cypher.decrypt(contents, offset);
+        while(true) {
+            try {
+                String saveChoice = reader.readLine();
 
-                    System.out.println("Here is your decrypted message! \n--------------------------\n" + decryptedMessage);
-                    break;
+                switch (saveChoice.toUpperCase()) {
+                    case "YES" -> {
+                        System.out.println("Great what shall we name our file?");
+                        String newFile = reader.readLine();
+                        WriteFile writer = new WriteFile();
+                        writer.writeToFile(newFile, message);
+                        System.out.println("File: \"" + newFile + "\" saved!\n");
+                    }
+                    case "NO" -> System.out.println("Excellent, moving on!\n");
+                    default -> {
+                        System.out.println("please enter yes or no!");
+                        continue;
+                    }
+                }
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }break;
+        }
+    }
 
-                } else if (choice.equalsIgnoreCase("no")) {
-                    System.out.println("\nHmmm, Okay lets try cracking it then!");
-                    System.out.println("Please pick how you would like to decrypt your file.");
-                    System.out.println("1. Brute Force.");
-                    System.out.println("2. Statistically");
 
-                    while (true) {
-                        if (!scanner.hasNextInt()) {
-                            scanner.next();
-                            System.out.println("Please pick an integer.");
-                            continue;
-                        }
-                        int pickChoice = scanner.nextInt();
+    protected void encrypt(String contents, int offset) {
+        CaesarCypher cypher = new CaesarCypher();
+        String encodedMessage = cypher.encrypt(contents, offset);
 
-                        if (pickChoice == 1) {
-                            System.out.println("Brute force! Excellent choice.\n");
-                            //run brute force
-                            RunBruteCrack runBruteCrack = new RunBruteCrack(contents);
-                            runBruteCrack.run();
-                            break;
-                        } else if (pickChoice == 2) {
-                            System.out.println("Statistically! Fantastic idea!\n");
-                            RunStatisticalCrack runStatisticalCrack = new RunStatisticalCrack(contents);
-                            runStatisticalCrack.run();
-                            break;
-                        } else {
-                            System.out.println("please pick a valid option!");
+        System.out.println("You're enigmatic results are.. Dun dun duuunnn... \n");
+        System.out.println(encodedMessage);
+
+        saveFile(encodedMessage);
+    }
+
+    protected void decrypt(String contents) {
+
+        while(true) {
+            try {
+                System.out.println("Do you know the key, yes/no?");
+                String choice = reader.readLine();
+
+                switch (choice.toUpperCase()) {
+                    case "YES" -> {
+                        System.out.println("Great, enter it now!");
+                        int offset = pickAnOffset();
+                        CaesarCypher cypher = new CaesarCypher();
+                        String decryptedMessage = cypher.decrypt(contents, offset);
+                        System.out.println("Here is your decrypted message! \n--------------------------\n" + decryptedMessage);
+                        saveFile(decryptedMessage);
+                    }
+                    case "NO" -> {
+                        System.out.println("\nHmmm, Okay lets try cracking it then!");
+                        System.out.println("Please pick how you would like to decrypt your file.");
+                        System.out.println("1. Brute Force.");
+                        System.out.println("2. Statistically");
+
+                        while(true) {
+                            String option = reader.readLine();
+                            switch (option) {
+                                case "1" -> {
+                                    System.out.println("Brute force! Excellent choice.\n");
+                                    RunBruteCrack runBruteCrack = new RunBruteCrack(contents);
+                                    runBruteCrack.run();
+                                }
+                                case "2" -> {
+                                    System.out.println("Statistically! Fantastic idea!\n");
+                                    RunStatisticalCrack runStatisticalCrack = new RunStatisticalCrack(contents);
+                                    runStatisticalCrack.run();
+                                }
+                                default -> {
+                                    System.out.println("\t\tplease pick a valid option!\n (1 for brute force or 2 for statistical crack.)\n");
+                                    continue;
+                                }
+
+                            }break;
                         }
                     }
-                } else {
-                    System.out.println("Please pick a valid option!");
-                    continue;
-                }break;
+                    default -> System.out.println("please pick a valid option!\n");
 
-
-            }
+                }
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }break;
         }
+    }
 }

@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 //Runs the statistical crack code - outputs the decrypted code and ask user if they want to save end file
 
-public class RunStatisticalCrack {
+public class RunStatisticalCrack extends Menu {
     String contents;
     private static final Scanner scanner = new Scanner(new InputStreamReader(System.in));
 
@@ -39,7 +39,6 @@ public class RunStatisticalCrack {
         String decryptedMessage = cypher.decrypt(contents, probableKey);
 
         System.out.println("Here is the decrypted message!\n------------------------------\n" + decryptedMessage + "\n");
-        Menu menu = new Menu();
-        menu.saveFile(decryptedMessage);
+        saveFile(decryptedMessage);
     }
 }

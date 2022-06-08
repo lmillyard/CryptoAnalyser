@@ -7,7 +7,7 @@ import java.util.Map;
 //The Highest score wins. Returns the most likely Offset based on this score.
 public class BruteForce {
 
-    String contents;
+    private String contents;
 
     Map<Integer, Integer> scoreMap = new LinkedHashMap<>();
     Integer highestScore;
@@ -18,18 +18,18 @@ public class BruteForce {
 
     }
 
-    public int bruteCrack() {
+    public int bruteCrack(String language, boolean defaultRule) {
 
         CaesarCypher cypher = new CaesarCypher();
-        LanguageRules languageRules = new LanguageRules();
+        LanguageRules languageRules = new LanguageRules(language, defaultRule);
 
         for (int offset = 0; offset < 26; offset++) {
             int score = 0;
             String decipheredMessage = cypher.decrypt(contents, offset);
-            String messageArray [] = decipheredMessage.split(" ");
+            String[] messageArray = decipheredMessage.split(" ");
 
             for (String word: messageArray) {
-                score += languageRules.englishLangCipherScore(word);
+                score += languageRules.getScore(word);
             }
             scoreMap.put(offset,score);
         }

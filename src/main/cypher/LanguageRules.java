@@ -1,51 +1,80 @@
 package main.cypher;
 
-/*Language rules - Currently only for English - but has scope to expand this at a later stage(See commented out code for example).
+/*Language rules - Currently only for English - but has scope to expand this at a later stage.
 Rules are based on 'illegal' letter combinations and the 10 most common words in the english language.
 each word is checked against both list's, and it returns a score based upon this*/
 
-public class LanguageRules {
+import main.fileOperations.ReadFile;
+import main.interactives.Menu;
 
-//    private String language;
-    private String cypheredWord;
+public class LanguageRules extends Menu {
 
-
-//    public LanguageRules(String language){
-//        this.language = language;
-//    }
-    // int score - add points for "the, and..." subtract point for "zz,yy,uu..."
+    private final String language;
+    private int score;
+    private final boolean isUsingDefaultRules;
 
 
-//    public void start(String word) {
-//        this.cypheredWord = word;
-//        if (language.equalsIgnoreCase("english")) {
-//            englishLangCipherScore(cypheredWord);
-//        }
-//    }
 
+    public LanguageRules(String language, boolean defaultRules){
+        this.language = language;
+        this.isUsingDefaultRules = defaultRules;
+    }
 
-    // Rules for English.
-    public int englishLangCipherScore(String wordToCheck) {
-        int score = 0;
+    public int getScore(String wordToCheck) {
+        score = 0;
+        if (language.equalsIgnoreCase("english") && isUsingDefaultRules) {
+            score = englishLangDefaultScore(wordToCheck);
+        }
 
-        String cannotExist [] = new String[] {"bx", "df", "fq", "pz", "zk", "qp", "bx", "cj", "qw", "gx", "cj", "sx", "vf", "rk",};
-        String mustExist [] = new String[] {"the", "and", "if", "of", "a", "in", "is", "you", "that", "it", "he", "she"};
+        return score;
+    }
 
-        for (String combo: cannotExist) {
-            if(wordToCheck.contains(combo)) {
+    private String[] splitCSV(String fileName) {
+        ReadFile readFile = new ReadFile(fileName);
+        String contents = readFile.readFile();
+
+        return contents.split(",");
+
+    }
+    private int englishLangDefaultScore(String wordToCheck) {
+        String[] cannotExist = splitCSV("englishLangIllegalCombos");
+        String[] mustExist = splitCSV("englishLangMostCommon");
+
+        for (String combo : cannotExist) {
+            if (wordToCheck.contains(combo)) {
                 score -= 100;
             }
         }
 
-        for (String word: mustExist) {
-            if(wordToCheck.equalsIgnoreCase(word)){
-                score+=50;
+        for (String word : mustExist) {
+            if (wordToCheck.equalsIgnoreCase(word)) {
+                score += 50;
             }
         }
-
         return score;
+    }
 
-        }
-
+//    public int languageCipherScore(String wordToCheck) {
+//
+//        int score = 0;
+//        String[] cannotExist = splitCSV("englishLangIllegalCombos");
+//        String[] mustExist = splitCSV("englishLangMostCommon");
+//
+//        boolean defaultRules = pickDefaultRules(language);
+//
+//
+//            for (String combo : cannotExist) {
+//                if (wordToCheck.contains(combo)) {
+//                    score -= 100;
+//                }
+//            }
+//
+//            for (String word : mustExist) {
+//                if (wordToCheck.equalsIgnoreCase(word)) {
+//                    score += 50;
+//                }
+//            }
+//        return score;
+//    }
 
 }

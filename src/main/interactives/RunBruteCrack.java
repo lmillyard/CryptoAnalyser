@@ -3,21 +3,21 @@ package main.interactives;
 import main.cypher.BruteForce;
 import main.cypher.CaesarCypher;
 
-import java.io.InputStreamReader;
-import java.util.Scanner;
-
 //Runs the Brute Crack code and outputs an interactive menu to the user asking if they want to save the decrypted message
 
-public class RunBruteCrack {
-    String contents;
-    private static final Scanner scanner = new Scanner(new InputStreamReader(System.in));
+public class RunBruteCrack extends Menu {
+    private final String contents;
 
     public RunBruteCrack(String fileContents){
         this.contents = fileContents;
     }
 
-
     public void run() {
+        String language = pickALanguage();
+        boolean defaultRules = pickDefaultRules(language);
+
+        BruteForce brute = new BruteForce(contents);
+        int probableKey = brute.bruteCrack(language, defaultRules);
 
         try {
             for (int i = 0; i < 4; i++) {
@@ -30,9 +30,6 @@ public class RunBruteCrack {
         } catch (InterruptedException e){
             System.out.println(e.getMessage());
         }
-
-        BruteForce brute = new BruteForce(contents);
-        int probableKey = brute.bruteCrack();
 
         System.out.println("My best guess is that " + probableKey + " is the key.");
         System.out.println("lets test it out!\n");
