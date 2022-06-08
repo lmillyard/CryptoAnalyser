@@ -20,6 +20,15 @@ public class LanguageRules extends Menu {
         this.uploadedContents = uploadedContents;
     }
 
+    public int getScore(String wordToCheck) {
+        score = 0;
+        if (language.equalsIgnoreCase("english") && isUsingDefaultRules) {
+            score = englishLangDefaultScore(wordToCheck);
+        } else {
+            score = useOwnFileScore(wordToCheck, uploadedContents);
+        }
+        return score;
+    }
 
     public int getScore(String wordToCheck) {
         score = 0;

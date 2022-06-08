@@ -17,6 +17,8 @@ public class Menu {
 
     public int pickAnOption() {
 
+    public int pickAnOption() {
+
         System.out.println("What would you like to do today?");
         System.out.println("1. Encrypt.");
         System.out.println("2. Decrypt.");
@@ -81,6 +83,7 @@ public class Menu {
             }
         }
     }
+
 
     protected String pickALanguage() {
 
