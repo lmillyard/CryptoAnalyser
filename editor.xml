@@ -1,0 +1,8 @@
+<application>
+  <component name="CodeInsightSettings">
+    <option name="ADD_UNAMBIGIOUS_IMPORTS_ON_THE_FLY" value="true" />
+  </component>
+  <component name="EditorSettings">
+    <option name="SHOW_INTENTION_PREVIEW" value="true" />
+  </component>
+</application>

@@ -1,0 +1,20 @@
+<application>
+  <component name="FileTypeManager" version="18">
+    <extensionMap>
+      <mapping pattern="serbianLangIllegalCombos" type="AUTO_DETECTED" />
+      <mapping pattern="test" type="AUTO_DETECTED" />
+      <mapping pattern="Encoded" type="AUTO_DETECTED" />
+      <mapping pattern="englishLangMostCommon" type="AUTO_DETECTED" />
+      <mapping pattern="serbianLangMostCommon" type="AUTO_DETECTED" />
+      <mapping pattern="exampleFile" type="AUTO_DETECTED" />
+      <mapping pattern="excerpt1984" type="AUTO_DETECTED" />
+      <mapping pattern="llama" type="AUTO_DETECTED" />
+      <mapping pattern="llamaEncrypted" type="AUTO_DETECTED" />
+      <mapping pattern="englishLangIllegalCombos" type="AUTO_DETECTED" />
+      <mapping pattern="testText" type="AUTO_DETECTED" />
+      <mapping pattern="lyricsVenga" type="AUTO_DETECTED" />
+      <removed_mapping ext="apk" approved="true" type="ARCHIVE" />
+      <removed_mapping ext="psd" approved="true" type="Image" />
+    </extensionMap>
+  </component>
+</application>
