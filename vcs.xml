@@ -22,6 +22,10 @@
           <option name="url" value="https://github.com/lmillyard/CryptoAnalyser/b63985624ef344f65fde76ed07acffa3168d6927" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://github.com/lmillyard/LaurensCryptoAnalyser.git" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
     <option name="cloneParentDir" value="C:\Users\Owner\IdeaProjects" />
